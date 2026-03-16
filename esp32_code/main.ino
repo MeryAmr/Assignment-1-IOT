@@ -7,7 +7,7 @@
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
 
-// MQTT (HiveMQ)
+// MQTT
 const char* mqtt_server = "broker.hivemq.com";
 
 WiFiClient espClient;
@@ -21,7 +21,7 @@ PubSubClient client(espClient);
 #define TRIG_PIN 5
 #define ECHO_PIN 18
 
-// ACTUATOR PINS
+// ACTUATORS
 #define LED_RED 25
 #define LED_YELLOW 26
 #define LED_GREEN 27
@@ -34,14 +34,19 @@ Servo servo;
 
 unsigned long lastMsg = 0;
 
-// THRESHOLDS
-#define TEMP_THRESHOLD  30.0   // °C  — red LED turns ON above this
-#define LIGHT_THRESHOLD 2500   // ADC — yellow LED turns ON above this (higher ADC = darker)
-#define DIST_THRESHOLD  20.0   // cm  — servo opens below this
+// -------- Thresholds (F6) --------
+float tempThreshold = 30.0;
+int lightThreshold = 2500;
+float distanceThreshold = 20.0;
 
-// non-blocking buzzer state
-bool          buzzerActive  = false;
-unsigned long buzzerEndTime = 0;
+// -------- Manual States --------
+bool redManual = false;
+bool yellowManual = false;
+bool greenManual = false;
+bool buzzerManual = false;
+bool relayManual = false;
+int servoManualAngle = 90;
+
 
 // WIFI CONNECT
 void connectWiFi() {
@@ -58,6 +63,7 @@ void connectWiFi() {
   Serial.println(" Connected!");
 }
 
+
 // MQTT CALLBACK
 void callback(char* topic, byte* payload, unsigned int length) {
 
@@ -66,31 +72,44 @@ void callback(char* topic, byte* payload, unsigned int length) {
   for (int i = 0; i < length; i++)
     message += (char)payload[i];
 
-  Serial.print("Message received: ");
-  Serial.println(message);
-
   String t = String(topic);
 
+  Serial.println("MQTT -> " + t + " : " + message);
+
+
+  // -------- MANUAL SWITCH STATES --------
+
   if (t == "actuators/led/red")
-    digitalWrite(LED_RED, message == "ON");
+    redManual = (message == "ON");
 
   if (t == "actuators/led/yellow")
-    digitalWrite(LED_YELLOW, message == "ON");
+    yellowManual = (message == "ON");
 
   if (t == "actuators/led/green")
-    digitalWrite(LED_GREEN, message == "ON");
+    greenManual = (message == "ON");
 
   if (t == "actuators/buzzer")
-    digitalWrite(BUZZER, message == "ON");
+    buzzerManual = (message == "ON");
 
   if (t == "actuators/relay")
-    digitalWrite(RELAY, message == "ON");
+    relayManual = (message == "ON");
 
-  if (t == "actuators/servo") {
-    int angle = message.toInt();
-    servo.write(angle);
-  }
+  if (t == "actuators/servo")
+    servoManualAngle = message.toInt();
+
+
+  // -------- THRESHOLD UPDATES --------
+
+  if (t == "thresholds/temperature")
+    tempThreshold = message.toFloat();
+
+  if (t == "thresholds/light")
+    lightThreshold = message.toInt();
+
+  if (t == "thresholds/distance")
+    distanceThreshold = message.toFloat();
 }
+
 
 // MQTT RECONNECT
 void reconnect() {
@@ -112,6 +131,10 @@ void reconnect() {
       client.subscribe("actuators/relay");
       client.subscribe("actuators/servo");
 
+      client.subscribe("thresholds/temperature");
+      client.subscribe("thresholds/light");
+      client.subscribe("thresholds/distance");
+
     } else {
 
       Serial.println("retrying...");
@@ -120,7 +143,8 @@ void reconnect() {
   }
 }
 
-// ULTRASONIC
+
+// ULTRASONIC SENSOR
 long readDistance() {
 
   digitalWrite(TRIG_PIN, LOW);
@@ -135,6 +159,7 @@ long readDistance() {
 
   return duration * 0.034 / 2;
 }
+
 
 void setup() {
 
@@ -151,7 +176,6 @@ void setup() {
   pinMode(RELAY, OUTPUT);
 
   servo.attach(SERVO_PIN);
-  servo.write(90);   // start in closed position
 
   dht.begin();
 
@@ -161,108 +185,88 @@ void setup() {
   client.setCallback(callback);
 }
 
+
 void loop() {
 
-  // WIFI RECONNECT
-  if (WiFi.status() != WL_CONNECTED) {
+  if (WiFi.status() != WL_CONNECTED)
     connectWiFi();
-  }
 
-  // MQTT RECONNECT
-  if (!client.connected()) {
+  if (!client.connected())
     reconnect();
-  }
 
   client.loop();
 
-  // stop buzzer after 2 seconds
-  if (buzzerActive && millis() >= buzzerEndTime) {
-    noTone(BUZZER);
-    buzzerActive = false;
-    Serial.println("Buzzer OFF");
-  }
 
-  // SENSOR COLLECTION EVERY 2 SECONDS
+  // SENSOR LOOP EVERY 2s
   if (millis() - lastMsg > 2000) {
 
     lastMsg = millis();
 
     float temperature = dht.readTemperature();
-    float humidity    = dht.readHumidity();
-
-    int  motion   = digitalRead(PIR_PIN);
-    int  light    = analogRead(LDR_PIN);
+    float humidity = dht.readHumidity();
+    int motion = digitalRead(PIR_PIN);
+    int light = analogRead(LDR_PIN);
     long distance = readDistance();
 
-    // SERIAL DEBUG (F1)
+
+    // SERIAL DEBUG
     Serial.println("------ Sensor Data ------");
 
     Serial.print("Temperature: ");
-    Serial.print(temperature);
-    Serial.println(" °C");
+    Serial.println(temperature);
 
     Serial.print("Humidity: ");
-    Serial.print(humidity);
-    Serial.println(" %");
+    Serial.println(humidity);
 
-    Serial.print("Light Level: ");
+    Serial.print("Light: ");
     Serial.println(light);
 
     Serial.print("Motion: ");
-    Serial.println(motion ? "Detected" : "Not Detected");
+    Serial.println(motion);
 
     Serial.print("Distance: ");
-    Serial.print(distance);
-    Serial.println(" cm");
+    Serial.println(distance);
 
     Serial.println("-------------------------");
 
-    // JSON PAYLOADS (F2)
-    String tempJson   = "{\"value\":" + String(temperature) + ",\"unit\":\"C\"}";
-    String humJson    = "{\"value\":" + String(humidity)    + ",\"unit\":\"%\"}";
-    String lightJson  = "{\"value\":" + String(light)       + "}";
-    String motionJson = "{\"detected\":" + String(motion)   + "}";
-    String distJson   = "{\"value\":" + String(distance)    + ",\"unit\":\"cm\"}";
+
+    // JSON TELEMETRY
+    String tempJson = "{\"value\":" + String(temperature) + ",\"unit\":\"C\"}";
+    String humJson = "{\"value\":" + String(humidity) + ",\"unit\":\"%\"}";
+    String lightJson = "{\"value\":" + String(light) + "}";
+    String motionJson = "{\"detected\":" + String(motion) + "}";
+    String distJson = "{\"value\":" + String(distance) + ",\"unit\":\"cm\"}";
 
     client.publish("sensors/temperature", tempJson.c_str());
-    client.publish("sensors/humidity",    humJson.c_str());
-    client.publish("sensors/light",       lightJson.c_str());
-    client.publish("sensors/motion",      motionJson.c_str());
-    client.publish("sensors/distance",    distJson.c_str());
+    client.publish("sensors/humidity", humJson.c_str());
+    client.publish("sensors/light", lightJson.c_str());
+    client.publish("sensors/motion", motionJson.c_str());
+    client.publish("sensors/distance", distJson.c_str());
 
-    // AUTOMATIC ACTUATOR CONTROL (F4)
 
-    // Red LED: high temperature
-    if (temperature > TEMP_THRESHOLD) {
-      digitalWrite(LED_RED, HIGH);
-      Serial.println("AUTO: High temp — Red LED ON");
-    } else {
-      digitalWrite(LED_RED, LOW);
-    }
+    // -------- OR LOGIC (Threshold OR Switch) --------
 
-    // Yellow LED: dark condition
-    if (light > LIGHT_THRESHOLD) {
-      digitalWrite(LED_YELLOW, HIGH);
-      Serial.println("AUTO: Dark — Yellow LED ON");
-    } else {
-      digitalWrite(LED_YELLOW, LOW);
-    }
+    bool redAuto = temperature > tempThreshold;
+    digitalWrite(LED_RED, redAuto || redManual);
 
-    // Buzzer: motion detected — 2 second non-blocking beep
-    if (motion && !buzzerActive) {
-      buzzerActive  = true;
-      buzzerEndTime = millis() + 2000;
+    bool yellowAuto = light > lightThreshold;
+    digitalWrite(LED_YELLOW, yellowAuto || yellowManual);
+
+    digitalWrite(LED_GREEN, greenManual);
+
+    bool buzzerAuto = motion;
+    if (buzzerManual || buzzerAuto)
       tone(BUZZER, 1000);
-      Serial.println("AUTO: Motion — Buzzer ON 2s");
-    }
+    else
+      noTone(BUZZER);
 
-    // Servo: distance barrier (F7)
-    // distance > 0 filters out false zeros when nothing is in range
-    if (distance > 0 && distance < DIST_THRESHOLD) {
+    digitalWrite(RELAY, relayManual);
+
+    bool servoAuto = distance > 0 && distance < distanceThreshold;
+
+    if (servoAuto)
       servo.write(0);
-      Serial.println("AUTO: Object close — Servo OPEN (0°)");
-    } else {
-      servo.write(90);
-    }
+    else
+      servo.write(servoManualAngle);
   }
 }

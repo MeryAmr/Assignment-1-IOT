@@ -20,7 +20,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 160,
+        "x": 180,
         "y": 280,
         "wires": [
             [
@@ -36,7 +36,7 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 370,
+        "x": 350,
         "y": 280,
         "wires": [
             [
@@ -142,7 +142,7 @@
         "z": "39d8ba27391e7293",
         "name": "Humidity %",
         "group": "4c09235e9f9fe514",
-        "order": 0,
+        "order": 2,
         "value": "payload",
         "valueType": "msg",
         "width": 3,
@@ -202,7 +202,7 @@
         "z": "39d8ba27391e7293",
         "name": "Light Level",
         "group": "4c09235e9f9fe514",
-        "order": 0,
+        "order": 3,
         "value": "payload",
         "valueType": "msg",
         "width": 3,
@@ -262,7 +262,7 @@
         "z": "39d8ba27391e7293",
         "name": "Distance",
         "group": "4c09235e9f9fe514",
-        "order": 0,
+        "order": 4,
         "value": "payload",
         "valueType": "msg",
         "width": 3,
@@ -321,7 +321,7 @@
         "type": "ui-text",
         "z": "39d8ba27391e7293",
         "group": "4c09235e9f9fe514",
-        "order": 0,
+        "order": 5,
         "width": 0,
         "height": 0,
         "name": "Motion Status",
@@ -339,6 +339,826 @@
         "x": 780,
         "y": 360,
         "wires": []
+    },
+    {
+        "id": "39f595af3db69f59",
+        "type": "ui-switch",
+        "z": "39d8ba27391e7293",
+        "name": "Red Led",
+        "label": "Red Led",
+        "group": "f5dccc9802498244",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "switch",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 180,
+        "y": 360,
+        "wires": [
+            [
+                "866cdafb6619765c"
+            ]
+        ]
+    },
+    {
+        "id": "866cdafb6619765c",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "actuators/led/red",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 530,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "4f7de1ed9324db75",
+        "type": "ui-switch",
+        "z": "39d8ba27391e7293",
+        "name": "Yellow Led",
+        "label": "Yellow Led",
+        "group": "f5dccc9802498244",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "switch",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 190,
+        "y": 420,
+        "wires": [
+            [
+                "d8c38e778ea90119"
+            ]
+        ]
+    },
+    {
+        "id": "d8c38e778ea90119",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "actuators/led/yellow",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 520,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "6c5086d62e82f89a",
+        "type": "ui-switch",
+        "z": "39d8ba27391e7293",
+        "name": "Green Led",
+        "label": "Green Led",
+        "group": "f5dccc9802498244",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "switch",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 190,
+        "y": 480,
+        "wires": [
+            [
+                "ce0e132daf89868c"
+            ]
+        ]
+    },
+    {
+        "id": "ce0e132daf89868c",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "actuators/led/green",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 530,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e885658e26ddaca9",
+        "type": "ui-switch",
+        "z": "39d8ba27391e7293",
+        "name": "Buzzer",
+        "label": "Buzzer",
+        "group": "f5dccc9802498244",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "switch",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 170,
+        "y": 540,
+        "wires": [
+            [
+                "ecb98e3203bd64f6"
+            ]
+        ]
+    },
+    {
+        "id": "ecb98e3203bd64f6",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "actuators/buzzer",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 530,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "a9bf956b2281a6be",
+        "type": "ui-switch",
+        "z": "39d8ba27391e7293",
+        "name": "Relay",
+        "label": "Relay",
+        "group": "f5dccc9802498244",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "switch",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 170,
+        "y": 600,
+        "wires": [
+            [
+                "2798591bd8fcef29"
+            ]
+        ]
+    },
+    {
+        "id": "2798591bd8fcef29",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "actuators/relay",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 540,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "6992a6ebd3f831d8",
+        "type": "ui-slider",
+        "z": "39d8ba27391e7293",
+        "group": "f5dccc9802498244",
+        "name": "Servo Angle",
+        "label": "Servo Angle",
+        "tooltip": "",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "thumbLabel": "true",
+        "showTicks": "always",
+        "min": 0,
+        "max": "180",
+        "step": 1,
+        "className": "",
+        "iconPrepend": "",
+        "iconAppend": "",
+        "color": "",
+        "colorTrack": "",
+        "colorThumb": "",
+        "showTextField": false,
+        "x": 190,
+        "y": 660,
+        "wires": [
+            [
+                "12316a94f7956dee"
+            ]
+        ]
+    },
+    {
+        "id": "12316a94f7956dee",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "actuators/servo",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 540,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "2777030d51997068",
+        "type": "ui-number-input",
+        "z": "39d8ba27391e7293",
+        "group": "72e333abf0bf1238",
+        "name": "Temperature Threshold",
+        "label": "Temperature Threshold",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "50",
+        "step": 1,
+        "tooltip": "",
+        "delay": 300,
+        "passthru": true,
+        "sendOnDelay": false,
+        "sendOnBlur": true,
+        "sendOnEnter": true,
+        "className": "",
+        "clearable": false,
+        "icon": "",
+        "iconPosition": "left",
+        "iconInnerPosition": "inside",
+        "spinner": "default",
+        "x": 230,
+        "y": 720,
+        "wires": [
+            [
+                "58e4de1a1d99b3f5"
+            ]
+        ]
+    },
+    {
+        "id": "7310a251a0dd442f",
+        "type": "ui-number-input",
+        "z": "39d8ba27391e7293",
+        "group": "72e333abf0bf1238",
+        "name": "Light Threshold",
+        "label": "Light Threshold",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "100000",
+        "step": "100",
+        "tooltip": "",
+        "delay": 300,
+        "passthru": true,
+        "sendOnDelay": false,
+        "sendOnBlur": true,
+        "sendOnEnter": true,
+        "className": "",
+        "clearable": false,
+        "icon": "",
+        "iconPosition": "left",
+        "iconInnerPosition": "inside",
+        "spinner": "default",
+        "x": 200,
+        "y": 780,
+        "wires": [
+            [
+                "9d85a4faa5693fd5"
+            ]
+        ]
+    },
+    {
+        "id": "4c69bab8efcb8af4",
+        "type": "ui-number-input",
+        "z": "39d8ba27391e7293",
+        "group": "72e333abf0bf1238",
+        "name": "Distance Warning Threshold",
+        "label": "Distance Warning Threshold",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "400",
+        "step": 1,
+        "tooltip": "",
+        "delay": 300,
+        "passthru": true,
+        "sendOnDelay": false,
+        "sendOnBlur": true,
+        "sendOnEnter": true,
+        "className": "",
+        "clearable": false,
+        "icon": "",
+        "iconPosition": "left",
+        "iconInnerPosition": "inside",
+        "spinner": "default",
+        "x": 240,
+        "y": 840,
+        "wires": [
+            [
+                "9a07608251a6df7a"
+            ]
+        ]
+    },
+    {
+        "id": "58e4de1a1d99b3f5",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "thresholds/temperature",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 510,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "9d85a4faa5693fd5",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "thresholds/light",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 540,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "9a07608251a6df7a",
+        "type": "mqtt out",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "thresholds/distance",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d336f8be1d83de63",
+        "x": 530,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "300bfdea26cda6eb",
+        "type": "mqtt in",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "sensors/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d336f8be1d83de63",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 960,
+        "wires": [
+            [
+                "1b959d7f5d955274"
+            ]
+        ]
+    },
+    {
+        "id": "1b959d7f5d955274",
+        "type": "json",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 330,
+        "y": 960,
+        "wires": [
+            [
+                "b3c90660f6685677"
+            ]
+        ]
+    },
+    {
+        "id": "b3c90660f6685677",
+        "type": "function",
+        "z": "39d8ba27391e7293",
+        "name": "check alerts",
+        "func": "let tempThreshold = flow.get(\"tempThreshold\") || 30;\nlet distanceThreshold = flow.get(\"distanceThreshold\") || 10;\n\nlet alert = null;\n\n// Temperature alert\nif (msg.topic === \"sensors/temperature\" && msg.payload.value > tempThreshold) {\n    alert = \"🔥 HIGH TEMPERATURE!\";\n}\n\n// Motion alert\nif (msg.topic === \"sensors/motion\" && msg.payload.detected == 1) {\n    alert = \"🚨 MOTION DETECTED!\";\n}\n\n// Distance alert\nif (msg.topic === \"sensors/distance\" && msg.payload.value < distanceThreshold) {\n    alert = \"⚠ OBJECT TOO CLOSE!\";\n}\n\nif(!alert){\n    return null;\n}\n\n// -------- UI ALERT --------\n\nlet uiMsg = {\n    payload: alert\n};\n\n// -------- ALERT LOG --------\n\nlet history = flow.get(\"alertHistory\") || [];\n\nlet entry = {\n    timestamp: new Date().toLocaleString(),\n    alert: alert,\n    sensor: msg.topic\n};\n\nhistory.unshift(entry);\n\nif(history.length > 50){\n    history.pop();\n}\n\nflow.set(\"alertHistory\", history);\n\nlet logMsg = {\n    payload: history\n};\n\n// -------- EMAIL COOLDOWN --------\n\nlet lastSent = flow.get(\"lastAlertTime\") || 0;\nlet now = Date.now();\nlet cooldown = 300000; // 5 minutes\n\nlet emailMsg = null;\n\nif(now - lastSent > cooldown){\n    flow.set(\"lastAlertTime\", now);\n    emailMsg = { payload: alert };\n}\n\n// return to 3 outputs\nreturn [uiMsg, emailMsg, logMsg];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 960,
+        "wires": [
+            [
+                "53a1e6057ed01e15"
+            ],
+            [
+                "05838ebadae7a910"
+            ],
+            [
+                "2c8b6494784529bf"
+            ]
+        ]
+    },
+    {
+        "id": "53a1e6057ed01e15",
+        "type": "ui-notification",
+        "z": "39d8ba27391e7293",
+        "ui": "ae94ba6df3fd70f7",
+        "position": "top right",
+        "colorDefault": true,
+        "color": "#000000",
+        "displayTime": "5",
+        "showCountdown": true,
+        "outputs": 1,
+        "allowDismiss": true,
+        "dismissText": "Close",
+        "allowConfirm": false,
+        "confirmText": "Confirm",
+        "raw": false,
+        "className": "",
+        "name": "Alert UI Notification",
+        "x": 750,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "05838ebadae7a910",
+        "type": "e-mail",
+        "z": "39d8ba27391e7293",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "youssef.helal.dev@gmail.com",
+        "dname": "Alert Email",
+        "x": 730,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "ba26f508ad10a946",
+        "type": "mqtt in",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "thresholds/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d336f8be1d83de63",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 900,
+        "wires": [
+            [
+                "106366e31fa21cac"
+            ]
+        ]
+    },
+    {
+        "id": "106366e31fa21cac",
+        "type": "function",
+        "z": "39d8ba27391e7293",
+        "name": "convert thresholds",
+        "func": "// convert payload to number\nlet value = Number(msg.payload);\n\nif(msg.topic === \"thresholds/temperature\"){\n    flow.set(\"tempThreshold\", value);\n}\n\nif(msg.topic === \"thresholds/light\"){\n    flow.set(\"lightThreshold\", value);\n}\n\nif(msg.topic === \"thresholds/distance\"){\n    flow.set(\"distanceThreshold\", value);\n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 900,
+        "wires": [
+            [
+                "7ebf3425a3b150ab"
+            ]
+        ]
+    },
+    {
+        "id": "7ebf3425a3b150ab",
+        "type": "function",
+        "z": "39d8ba27391e7293",
+        "name": "store thresholds",
+        "func": "// store thresholds to Node-RED Memory\nif(msg.topic === \"thresholds/temperature\"){\n    flow.set(\"tempThreshold\", msg.payload);\n}\n\nif(msg.topic === \"thresholds/light\"){\n    flow.set(\"lightThreshold\", msg.payload);\n}\n\nif(msg.topic === \"thresholds/distance\"){\n    flow.set(\"distanceThreshold\", msg.payload);\n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c8b6494784529bf",
+        "type": "ui-table",
+        "z": "39d8ba27391e7293",
+        "group": "78d932d8a13b91bf",
+        "name": "Alert logs",
+        "label": "Alert logs",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "showSearch": true,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "append",
+        "className": "",
+        "x": 720,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "06e3a37918ecf822",
+        "type": "mqtt in",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "sensors/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d336f8be1d83de63",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 1080,
+        "wires": [
+            [
+                "c6e8fad67e4d298f"
+            ]
+        ]
+    },
+    {
+        "id": "c6e8fad67e4d298f",
+        "type": "json",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 330,
+        "y": 1080,
+        "wires": [
+            [
+                "89f8d00e22c37117"
+            ]
+        ]
+    },
+    {
+        "id": "0fa2cede5554e3b7",
+        "type": "file",
+        "z": "39d8ba27391e7293",
+        "name": "Save Sensors Logs",
+        "filename": "/data/sensors_log.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 750,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89f8d00e22c37117",
+        "type": "function",
+        "z": "39d8ba27391e7293",
+        "name": "Custom CSV Format",
+        "func": "// allowed topics\nlet allowed = [\n    \"sensors/temperature\",\n    \"sensors/humidity\",\n    \"sensors/light\",\n    \"sensors/distance\",\n    \"sensors/motion\"\n];\n\n// ignore anything else\nif (!allowed.includes(msg.topic)) {\n    return null;\n}\n\nlet timestamp = new Date().toISOString();\nlet value = msg.payload.value ?? msg.payload.detected;\n\n// CSV row\nmsg.payload = `${timestamp},${msg.topic},${value}\\n`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1080,
+        "wires": [
+            [
+                "0fa2cede5554e3b7"
+            ]
+        ]
+    },
+    {
+        "id": "d7149420949e99c7",
+        "type": "mqtt in",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "sensors/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d336f8be1d83de63",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 1160,
+        "wires": [
+            [
+                "07991da250a9d713"
+            ]
+        ]
+    },
+    {
+        "id": "07991da250a9d713",
+        "type": "json",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 330,
+        "y": 1160,
+        "wires": [
+            [
+                "f0d9969cbb713076"
+            ]
+        ]
+    },
+    {
+        "id": "f0d9969cbb713076",
+        "type": "function",
+        "z": "39d8ba27391e7293",
+        "name": "format table",
+        "func": "// allowed sensor topics\nlet allowed = [\n    \"sensors/temperature\",\n    \"sensors/humidity\",\n    \"sensors/light\",\n    \"sensors/distance\",\n    \"sensors/motion\"\n];\n\n// ignore anything else\nif(!allowed.includes(msg.topic)){\n    return null;\n}\n\nlet logs = flow.get(\"sensorLogs\") || [];\n\nlet entry = {\n    timestamp: new Date().toLocaleString(),\n    sensor: msg.topic,\n    value: msg.payload.value ?? msg.payload.detected\n};\n\nlogs.unshift(entry);\n\n// keep last 50 rows\nif(logs.length > 50){\n    logs.pop();\n}\n\nflow.set(\"sensorLogs\", logs);\n\nmsg.payload = logs;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1160,
+        "wires": [
+            [
+                "a2ddb9f0fe9cada1"
+            ]
+        ]
+    },
+    {
+        "id": "a2ddb9f0fe9cada1",
+        "type": "ui-table",
+        "z": "39d8ba27391e7293",
+        "group": "b8a87bfcee8595c6",
+        "name": "Sensors logs",
+        "label": "Sensors logs",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "showSearch": true,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "append",
+        "className": "",
+        "x": 670,
+        "y": 1160,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "d336f8be1d83de63",
@@ -374,52 +1194,44 @@
     {
         "id": "4c09235e9f9fe514",
         "type": "ui-group",
-        "name": "Group 1",
+        "name": "Metrics",
         "page": "60a15c7a32cee1ce",
         "width": 6,
         "height": 1,
         "order": 1,
         "showTitle": true,
         "className": "",
-        "visible": true,
-        "disabled": false,
+        "visible": "true",
+        "disabled": "false",
         "groupType": "default"
     },
     {
-        "id": "60a15c7a32cee1ce",
-        "type": "ui-page",
-        "name": "Page 1",
-        "ui": "ae94ba6df3fd70f7",
-        "path": "/page1",
-        "icon": "home",
-        "layout": "grid",
-        "theme": "0e95798e61d1fd5d",
-        "breakpoints": [
-            {
-                "name": "Default",
-                "px": 0,
-                "cols": 3
-            },
-            {
-                "name": "Tablet",
-                "px": 576,
-                "cols": 6
-            },
-            {
-                "name": "Small Desktop",
-                "px": 768,
-                "cols": 9
-            },
-            {
-                "name": "Desktop",
-                "px": 1024,
-                "cols": 12
-            }
-        ],
-        "order": 1,
+        "id": "f5dccc9802498244",
+        "type": "ui-group",
+        "name": "Controllers",
+        "page": "60a15c7a32cee1ce",
+        "width": 6,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
         "className": "",
         "visible": "true",
-        "disabled": "false"
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "72e333abf0bf1238",
+        "type": "ui-group",
+        "name": "Thresholds",
+        "page": "60a15c7a32cee1ce",
+        "width": 6,
+        "height": 1,
+        "order": 3,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
     },
     {
         "id": "ae94ba6df3fd70f7",
@@ -442,6 +1254,106 @@
         "allowInstall": false
     },
     {
+        "id": "78d932d8a13b91bf",
+        "type": "ui-group",
+        "name": "Alert Logs",
+        "page": "6d4f8b724ee47c84",
+        "width": 6,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "b8a87bfcee8595c6",
+        "type": "ui-group",
+        "name": "Sensors Logs",
+        "page": "6d4f8b724ee47c84",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "60a15c7a32cee1ce",
+        "type": "ui-page",
+        "name": "Home",
+        "ui": "ae94ba6df3fd70f7",
+        "path": "/Home",
+        "icon": "home",
+        "layout": "notebook",
+        "theme": "0e95798e61d1fd5d",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "6d4f8b724ee47c84",
+        "type": "ui-page",
+        "name": "Logs",
+        "ui": "ae94ba6df3fd70f7",
+        "path": "/logs",
+        "icon": "history",
+        "layout": "tabs",
+        "theme": "0e95798e61d1fd5d",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 2,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
         "id": "0e95798e61d1fd5d",
         "type": "ui-theme",
         "name": "Default Theme",
@@ -461,11 +1373,12 @@
         }
     },
     {
-        "id": "aa4e1202310fc386",
+        "id": "44d0c532cec0bb1d",
         "type": "global-config",
         "env": [],
         "modules": {
-            "@flowfuse/node-red-dashboard": "1.30.2"
+            "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-node-email": "5.2.1"
         }
     }
 ]
