@@ -1,0 +1,471 @@
+[
+    {
+        "id": "39d8ba27391e7293",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6261de3871c4c9ec",
+        "type": "mqtt in",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "topic": "sensors/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d336f8be1d83de63",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "2f3140ac601d5e09"
+            ]
+        ]
+    },
+    {
+        "id": "2f3140ac601d5e09",
+        "type": "json",
+        "z": "39d8ba27391e7293",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "89b85a45cce03e81"
+            ]
+        ]
+    },
+    {
+        "id": "89b85a45cce03e81",
+        "type": "function",
+        "z": "39d8ba27391e7293",
+        "name": "Sensor Router",
+        "func": "let topic = msg.topic;\n\nswitch(topic) {\n\n    case \"sensors/temperature\":\n        msg.topic = \"temperature\";\n        msg.payload = msg.payload.value;\n        return [msg, null, null, null, null];\n\n    case \"sensors/humidity\":\n        msg.topic = \"humidity\";\n        msg.payload = msg.payload.value;\n        return [null, msg, null, null, null];\n\n    case \"sensors/light\":\n        msg.topic = \"light\";\n        msg.payload = msg.payload.value;\n        return [null, null, msg, null, null];\n    \n    case \"sensors/distance\":\n        msg.topic = \"distance\";\n        msg.payload = msg.payload.value;\n        return [null, null, null, msg, null];\n\n    case \"sensors/motion\":\n        msg.topic = \"motion\";\n        msg.payload = msg.payload.detected ? \"Motion Detected\" : \"No Motion\";\n        return [null, null, null, null, msg];\n\n    default:\n        return null;\n}",
+        "outputs": 5,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 280,
+        "wires": [
+            [
+                "f2c3b66e53087df9"
+            ],
+            [
+                "5edf7eeeb1579770"
+            ],
+            [
+                "35a17ad6389ce1d8"
+            ],
+            [
+                "ca2d3d5370f801ef"
+            ],
+            [
+                "364ea5c4f3513744"
+            ]
+        ]
+    },
+    {
+        "id": "f2c3b66e53087df9",
+        "type": "ui-gauge",
+        "z": "39d8ba27391e7293",
+        "name": "Temperature °C",
+        "group": "4c09235e9f9fe514",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Temperature °C",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "°C",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "12.5",
+                "color": "#e7ea53",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "25",
+                "color": "#f98f39",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "37.5",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "50",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 780,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5edf7eeeb1579770",
+        "type": "ui-gauge",
+        "z": "39d8ba27391e7293",
+        "name": "Humidity %",
+        "group": "4c09235e9f9fe514",
+        "order": 0,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Humidity %",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "25",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "50",
+                "color": "#f98f39",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "75",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 770,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35a17ad6389ce1d8",
+        "type": "ui-gauge",
+        "z": "39d8ba27391e7293",
+        "name": "Light Level",
+        "group": "4c09235e9f9fe514",
+        "order": 0,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Light Level",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "lux",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "25000",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "50000",
+                "color": "#f98f39",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "75000",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "100000",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 770,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca2d3d5370f801ef",
+        "type": "ui-gauge",
+        "z": "39d8ba27391e7293",
+        "name": "Distance",
+        "group": "4c09235e9f9fe514",
+        "order": 0,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Distance",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "cm",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "100",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "200",
+                "color": "#f98f39",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "300",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "400",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 760,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "364ea5c4f3513744",
+        "type": "ui-text",
+        "z": "39d8ba27391e7293",
+        "group": "4c09235e9f9fe514",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "Motion Status",
+        "label": "Motion Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 780,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d336f8be1d83de63",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "4c09235e9f9fe514",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "60a15c7a32cee1ce",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "60a15c7a32cee1ce",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "ae94ba6df3fd70f7",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "0e95798e61d1fd5d",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "ae94ba6df3fd70f7",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "0e95798e61d1fd5d",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "aa4e1202310fc386",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.30.2"
+        }
+    }
+]
